@@ -1,0 +1,138 @@
+body {
+    font-family: Roboto, Arial;
+    color: rgb(33, 33, 33);
+}
+header{
+    display: flex; justify-content: space-between;
+     background-color: rgb(19, 25, 33); color: #fff;
+}
+header a , header a:hover {
+    color: #ffc300;    
+    font-size: 40px; margin: 5px 40px 5px 5px;
+    text-decoration: none;
+}
+header #logo {
+    width:117px;
+    padding: 20px 10px;
+}
+header  div input {
+    width: 700px; height: 40px;
+    padding: 10px; 
+}
+header div {
+    margin: 12px 12px 0px 0px;
+}
+.container-cart{
+    display: flex;
+}
+#container-items{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0px 20px 0px 80px;
+}
+#cartItems-checkOut{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+#container-items .card-item  ,
+#itemCart-container
+{
+    width: 250px; 
+    margin: 10px; padding: 10px;
+    border: #ffc300 1px solid;
+}
+#itemCart-container{
+    width: 200px;
+}
+#flashSale_js{
+    display: flex; justify-content: space-between;text-align: center; 
+    width: 50%; padding: 20px 10px 15px 10px;
+    border-bottom: 2px solid #FFC300;margin-bottom: 30px;
+}
+.price{
+    font-weight: bold;
+}
+.itemInfo{
+    padding: 10px 20px;
+}
+#q{
+    width: 60px; display: block;
+}
+#cartBtn{
+    width: 200px; padding: 5px; border-radius: 30px; 
+    margin-right: 15px;
+}
+.paypal_js {
+    font-weight: bold;  font-size: 18px;
+ }
+ .payImg{
+     width: 100px; margin: 0px 0px 0px 90px;
+ }
+ #calcPrice{
+     width: 320px; padding: 20px;
+     float: right; margin: 105px 10px 30px 10px;
+     border: #FFC300 solid 2px ;
+ }
+ .total div , .orderTotal div{
+     display: flex; justify-content: space-between;
+ }
+ .orderTotal input {
+     width: 25px;
+ }
+ #calcPrice .btn {
+     width: 250px;  margin: 15px 0px 10px 15px;
+ }
+ #calcPrice p {
+     font-weight: bold;
+ }
+ #order {
+     color:rgb(177, 39, 4) ;
+ }
+ #content_items{
+     float: left;
+ }
+ #content_items h4 {
+     padding: 40px 10px 20px 10px;
+ }
+ .ifempty{
+    padding:40px 10px 10px 10px;
+ }
+ .ifempty .btn {
+     margin: 20px 0px;
+    width: 200px; height: 40px;
+ }
+ @media (max-width: 576px){
+    header a , header a:hover {   
+        font-size: 30px; margin: 10px 4px;
+    }
+    header #logo {
+        width:80px;
+    }
+    header  div input {
+        width: 170px;padding: 10px; 
+    }
+    header div {
+        margin: 10px 0px 10px 0px;
+    }
+    #container-items ,   #cartItems-checkOut{
+        grid-template-columns: repeat(1, 1fr);
+        margin: 0px 0px 0px 0px;
+    }
+    #itemCart-container{
+        margin: 10px 0px 10px 60px;
+    }
+    #container-items .card-item {
+        width: 255px;
+        margin: 15px 0px 15px 36px;
+    }
+    #calcPrice {
+        margin: 20px 0px 20px 17px;
+    }
+    #flashSale_js{
+        width: 95%;
+        padding: 15px 3px 13px 3px;margin-bottom: 20px;
+    }
+    #flashSale_js h4 {
+        font-size: 17px;
+    }
+}
