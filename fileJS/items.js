@@ -117,8 +117,9 @@ const allItems_js = [
 ];
 
 
-// adding items auto in html file , generate js file
 
+// adding items auto in html file , generate js file index html
+function generateHtml(){
 var itemText = '';
 
 allItems_js.forEach(function (item) {
@@ -141,28 +142,33 @@ var  gridCards = document.getElementById('container-items');
 if (gridCards) {
     gridCards.innerHTML = itemText;
 }
+}
 
+generateHtml();
+
+
+const cartBtn = document.querySelectorAll('#cartBtn')
 
 // show added message to add to cart btn
+function addedAlert(){
+    let added = document.querySelectorAll('#added') 
+    for (let i = 0; i < cartBtn.length; i++) {
 
-var cartBtn = document.querySelectorAll('#cartBtn')
-var added = document.querySelectorAll('#added')
+        cartBtn[i].addEventListener('click', function () {
+            added[i].innerHTML = 'Product Added';
+            added[i].style.color = '#2e8b57';
+            console.log('added')
+        });
 
-for (let i = 0; i < cartBtn.length; i++) {
-
-    cartBtn[i].addEventListener('click', function () {
-        added[i].innerHTML = 'Product Added';
-        added[i].style.color = '#2e8b57';
-        console.log('added')
-    });
-
+    }
 }
+
+addedAlert();
 
 
 // filter function for search input
 
 var search = document.getElementById('search')
-
 search.addEventListener('keyup', function() {
     filterItems(search.value);
 });
@@ -185,6 +191,9 @@ function filterItems(value){
     document.getElementById('container-items').innerHTML = filteredItems;
 }
 
+
+
+
 // cart check out object
 
 export const checkOutcart = [
@@ -205,8 +214,43 @@ export const checkOutcart = [
     }
 ];
 
-for(let i=0; i<cartBtn.length; i++){
+/* save it in local storage
+function saveTostorage(){
+    localStorage.setItem('cart', JSON.stringify(checkOutcart))
+}
 
+// get cart from local storage 
+function getCart(){
+    localStorage.getItem(checkOutcart);
+}*/
+
+
+
+// cart check 
+
+let itemHTML='';
+var cartItemsCheckOut = document.getElementById('cartItems-checkOut')
+
+
+function cartEmpty(){
+if(checkOutcart.length ==0){
+
+    itemHTML=`
+        <div class='ifempty'>
+            <h5>Your Cart Is Empty</h5>
+            <a href='./index.html'><button type="button" class="btn btn-warning" id='shopping'>Shop Now</button></a>
+        </div>
+    `;
+
+    if(cartItemsCheckOut){
+        cartItemsCheckOut.innerHTML=itemHTML;
+    }
+}
+}
+
+cartEmpty();
+
+for(let i=0; i<cartBtn.length; i++){
     cartBtn[i].addEventListener('click',function(){
         checkOutcart.push({
             id: allItems_js[i].id,
@@ -218,69 +262,38 @@ for(let i=0; i<cartBtn.length; i++){
     });   
 }
 
-/* save it in local storage
-function saveTostorage(){
-    localStorage.setItem('cart', JSON.stringify(checkOutcart))
-}
-
-// get cart from local storage 
-function getCart(){
-    localStorage.getItem(checkOutcart);
-}*/
-
-let itemHTML='';
-var cartItemsCheckOut = document.getElementById('cartItems-checkOut')
-
-// cart check 
-
-if(checkOutcart.length ==0){
-    itemHTML=`
-        <div class='ifempty'>
-            <h5>Your Cart Is Empty</h5>
-            <a href='./index.html'><button type="button" class="btn btn-warning" id='shopping'>Shop Now</button></a>
-        </div>
-    `;
-    if(cartItemsCheckOut){
-        cartItemsCheckOut.innerHTML=itemHTML;
-    }
-}
-
-
-checkOutcart.forEach(function(cartProduct) {
-    const itemId = cartProduct.id;
-    let sameItem;
-
-    allItems_js.forEach(function(item) {
-        if (item.id === itemId) {
-            // We found the same product, normalize the data
-            sameItem = item;
-            // console.log(sameItem)
+function addTocart(){
+    checkOutcart.forEach(function(cartProduct) {
+        const itemId = cartProduct.id;
+        let sameItem;
+    
+        allItems_js.forEach(function(item) {
+            if (item.id === itemId) {
+                // We found the same product, normalize the data
+                sameItem = item;
+                // console.log(sameItem)
+            }
+        });
+    
+        if (sameItem) {
+             itemHTML += `
+                <div id="itemCart-container">
+                    <img src="${sameItem.img}" width="100px">
+                    <p class="Quantity">Quantity: 1</p>
+                    <p class="price">$${(sameItem.priceCent / 100).toFixed(2)}</p>
+                    <button type="button" class="btn btn-warning" id='removeBtn'>Remove From Cart</button>
+                </div>
+            `;
         }
-    });
-
-    if (sameItem) {
-         itemHTML += `
-            <div id="itemCart-container">
-                <img src="${sameItem.img}" width="100px">
-                <p class="Quantity">Quantity: 1</p>
-                <p class="price">$${(sameItem.priceCent / 100).toFixed(2)}</p>
-                <button type="button" class="btn btn-warning" id='removeBtn'>Remove From Cart</button>
-            </div>
-        `;
-    }
-    if(cartItemsCheckOut){
-        cartItemsCheckOut.innerHTML=itemHTML;
-       
-    }
-});
+        if(cartItemsCheckOut){
+            cartItemsCheckOut.innerHTML=itemHTML;
+           
+        }
+    });    
+}
 
 
-
-
-
-
-
-
+addTocart();
 
 
 

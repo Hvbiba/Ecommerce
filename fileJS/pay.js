@@ -31,13 +31,15 @@ var orderTotal = document.querySelector('#order p');
 var calcPriceBtn = document.getElementById('payBtn')
 
 
+//function to calc total price 
+function calcTtakPrice(){
     let shippingCost = 6.99;
     let price = 0;
     let before; let after;
     for(let i=0; i<obj.length; i++){
 
         price+= (obj[i].priceCent /100 ); // pure items cost 
-        before = (+price) + (+shippingCost) // before adding tax
+        before = Math.round( (+price) + (+shippingCost) )// before adding tax
         after = Math.round( (+before) + (+price * 0.1))  // after adding tax
     }
 
@@ -45,8 +47,9 @@ var calcPriceBtn = document.getElementById('payBtn')
     Shipping.innerHTML=`$ ${shippingCost}`;
     TotalBefore.innerHTML=`$ ${before}`;
     TotalAfter.innerHTML=`$ ${after}`;
+    orderTotal.innerHTML=`$ ${after}`
 
-    
+}
 
-    
+calcTtakPrice();
 
