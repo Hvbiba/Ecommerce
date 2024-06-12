@@ -119,6 +119,7 @@ const allItems_js = [
 
 
 // adding items auto in html file , generate js file index html
+
 function generateHtml(){
 var itemText = '';
 
@@ -147,6 +148,7 @@ if (gridCards) {
 generateHtml();
 
 
+
 const cartBtn = document.querySelectorAll('#cartBtn')
 
 // show added message to add to cart btn
@@ -164,6 +166,7 @@ function addedAlert(){
 }
 
 addedAlert();
+
 
 
 // filter function for search input
@@ -195,45 +198,39 @@ function filterItems(value){
 
 
 // cart check out object
+//getting data from local storage or empty arry
 
-export const checkOutcart = [
-    {
-        id:1,
-        quantity:1,
-        priceCent: 14.55 *100
-    },
-    {
-        id:2,
-        quantity:1,
-        priceCent: 14.55 *100
-    },
-    {
-        id:3,
-        quantity:1,
-        priceCent: 34.55 *100
-    }
-];
+export const checkOutcart = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-/* save it in local storage
-function saveTostorage(){
-    localStorage.setItem('cart', JSON.stringify(checkOutcart))
-}
-
-// get cart from local storage 
-function getCart(){
-    localStorage.getItem(checkOutcart);
-}*/
-
-
-
-// cart check 
 
 let itemHTML='';
 var cartItemsCheckOut = document.getElementById('cartItems-checkOut')
 
 
-function cartEmpty(){
-if(checkOutcart.length ==0){
+for (let i = 0; i < cartBtn.length; i++) {
+    cartBtn[i].addEventListener('click', function () {
+        //pushing or adding item to cart
+        checkOutcart.push({
+            id: allItems_js[i].id,
+            quantity: 1,
+            priceCent: allItems_js[i].priceCent,
+            img: allItems_js[i].img
+        });
+        console.log(checkOutcart);
+
+        // adding cart product to local storage
+        localStorage.setItem('cartItems', JSON.stringify(checkOutcart));
+         // Update the cart view
+         cartCheck();
+    });
+}
+
+
+function cartCheck()
+{
+//if it is empty []
+if(checkOutcart.length == 0)
+{
 
     itemHTML=`
         <div class='ifempty'>
@@ -242,58 +239,55 @@ if(checkOutcart.length ==0){
         </div>
     `;
 
+    // update ui for html
     if(cartItemsCheckOut){
         cartItemsCheckOut.innerHTML=itemHTML;
     }
 }
-}
 
-cartEmpty();
 
-for(let i=0; i<cartBtn.length; i++){
-    cartBtn[i].addEventListener('click',function(){
-        checkOutcart.push({
-            id: allItems_js[i].id,
-            quantity: 1,
-            priceCent: allItems_js[i].priceCent
-        });
-        console.log(checkOutcart);
-        //saveTostorage();
-    });   
-}
-
-function addTocart(){
-    checkOutcart.forEach(function(cartProduct) {
-        const itemId = cartProduct.id;
-        let sameItem;
-    
-        allItems_js.forEach(function(item) {
-            if (item.id === itemId) {
-                // We found the same product, normalize the data
-                sameItem = item;
-                // console.log(sameItem)
-            }
-        });
-    
-        if (sameItem) {
-             itemHTML += `
+//if we add items saved in local storage
+if(cartItemsCheckOut)
+{
+    for(let i=0; i<checkOutcart.length; i++){
+        itemHTML +=`
                 <div id="itemCart-container">
-                    <img src="${sameItem.img}" width="100px">
+                    <img src="${checkOutcart[i].img}" width="100px">
                     <p class="Quantity">Quantity: 1</p>
-                    <p class="price">$${(sameItem.priceCent / 100).toFixed(2)}</p>
+                    <p class="price">$${(checkOutcart[i].priceCent / 100).toFixed(2)}</p>
                     <button type="button" class="btn btn-warning" id='removeBtn'>Remove From Cart</button>
                 </div>
-            `;
-        }
-        if(cartItemsCheckOut){
-            cartItemsCheckOut.innerHTML=itemHTML;
-           
-        }
-    });    
+        `;
+    }
+    if(cartItemsCheckOut){
+        cartItemsCheckOut.innerHTML=itemHTML;
+        removeItem();
+    }
+}
 }
 
 
-addTocart();
+cartCheck();  
+
+
+
+function removeItem() {
+    var removeBtns = document.querySelectorAll('#removeBtn');
+    for (let i = 0; i < removeBtns.length; i++) {
+        removeBtns[i].addEventListener('click', function () {
+            console.log('removed');
+            // Find the index of the item to be removed
+            const indexToRemove = Array.from(removeBtns).indexOf(this);
+            checkOutcart.splice(indexToRemove, 1);
+            localStorage.setItem('cartItems', JSON.stringify(checkOutcart));
+            // Update the cart view
+            cartCheck();
+        });
+    }
+}
+
+
+
 
 
 

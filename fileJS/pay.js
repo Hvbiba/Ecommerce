@@ -51,5 +51,6 @@ function calcTtakPrice(){
 
 }
 
-calcTtakPrice();
+calcPriceBtn.addEventListener('click' , calcTtakPrice);
+
 
