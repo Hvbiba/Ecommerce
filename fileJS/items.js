@@ -275,17 +275,14 @@ function removeItem() {
     var removeBtns = document.querySelectorAll('#removeBtn');
     for (let i = 0; i < removeBtns.length; i++) {
         removeBtns[i].addEventListener('click', function () {
-            console.log('removed');
-            // Find the index of the item to be removed
-            const indexToRemove = Array.from(removeBtns).indexOf(this);
-            checkOutcart.splice(indexToRemove, 1);
+            console.log('removed');            
+            checkOutcart.splice(i, 1);
             localStorage.setItem('cartItems', JSON.stringify(checkOutcart));
             // Update the cart view
             cartCheck();
         });
     }
 }
-
 
 
 
