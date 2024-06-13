@@ -224,21 +224,19 @@ function cartCheck() {
 
 	//if it is empty []
 	if (checkOutcart.length == 0) {
+		console.log("empty");
 		itemHTML = `
         <div class='ifempty'>
             <h5>Your Cart Is Empty</h5>
             <a href='./index.html'><button type="button" class="btn btn-warning" id='shopping'>Shop Now</button></a>
         </div>
     `;
-
 		// update ui for html
-		if (cartItemsCheckOut) {
-			cartItemsCheckOut.innerHTML = itemHTML;
-		}
+		cartItemsCheckOut.innerHTML = itemHTML;
 	}
 
 	//if we add items saved in local storage
-	if (cartItemsCheckOut) {
+	else if (cartItemsCheckOut.length !== 0) {
 		// itemHTML = ``;
 		// for (let i = 0; i < checkOutcart.length; i++) {
 		// 	itemHTML += `
@@ -296,10 +294,3 @@ function removeItem() {
 		});
 	}
 }
-
-// function removeItem() {
-// 	const productsArr = document.querySelectorAll("itemCart-container");
-// 	console.log(productsArr);
-// }
-
-// console.log(checkOutcart);
